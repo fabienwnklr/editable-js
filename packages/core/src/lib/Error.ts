@@ -5,7 +5,7 @@ export class EditableJSError extends Error {
     }
 }
 
-export class EditableJSInvalidType extends EditableJSError {
+export class InvalidTypeError extends Error {
     constructor(message: string) {
         super(message);
         this.name = 'EditableJS - InvalidType';

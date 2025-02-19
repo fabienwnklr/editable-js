@@ -18,7 +18,7 @@ export class EditableJS extends MicroEvent {
    * @param {HTMLAnchorElement} $el Element to make editable
    * @param {EditableJSOptions} options
    */
-  constructor($el: HTMLElement, options: EditableJSOptions = { type: 'text' } ) {
+  constructor($el: HTMLElement, options: EditableJSOptions ) {
     super();
 
     this._options = {

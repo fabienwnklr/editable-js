@@ -1,3 +1,5 @@
+import { InvalidTypeError } from "./Error";
+
 type InputType = 'text' | 'email' | 'password' | 'number' | 'date' | 'color' | 'time' | 'select' | 'textarea';
 
 type ElementForType<T extends InputType> =
@@ -13,6 +15,10 @@ export class DynamicInput<T extends InputType> {
     private attributes: Record<string, string> = {},
     private options: string[] = [] // Pour les <select>
   ) {
+    // if type is not supported, throw an error
+    if (!['text', 'email', 'password', 'number', 'date', 'color', 'time', 'select', 'textarea'].includes(type)) {
+      throw new InvalidTypeError(`Type ${type} is not supported`);
+    }
     this.element = this.createElement();
   }
 

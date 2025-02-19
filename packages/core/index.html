@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EditableJS</title>
+    <style>
+      body {
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+          'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        height: 100vh;
+        margin: 0;
+      }
+
+      .wrapper {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #f7f7f7;
+        border-bottom: 1px solid #eaeaea;
+        padding: 0.5rem 1rem;
+        box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+        margin-bottom: 4rem;
+      }
+
+      .table {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* 3 colonnes de largeur égale */
+        gap: 1px; /* Espace entre les cellules */
+        background-color: #ccc; /* Couleur de fond pour les bordures */
+        border: 1px solid #ccc; /* Bordure du tableau */
+      }
+
+      .header,
+      .row {
+        display: contents; /* Les enfants directs sont traités comme des cellules de la grille */
+      }
+
+      .header > div,
+      .row > div {
+        padding: 10px;
+        background-color: #fff; /* Couleur de fond des cellules */
+        border: 1px solid #ccc; /* Bordures des cellules */
+      }
+
+      .header > div {
+        font-weight: bold; /* En-têtes en gras */
+        background-color: #f0f0f0; /* Couleur de fond de l'en-tête */
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <h1>EditableJS</h1>
+    </nav>
+    <div class="wrapper">
+      <div class="table">
+        <div class="header">
+          <div>Type</div>
+          <div>Test it</div>
+        </div>
+        <div class="row">
+          <div>"text" : Simple text field</div>
+          <div><a href="#" data-ejs="true" data-ejs-type="text">Edit me</a></div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="/src/index.ts"></script>
+  </body>
+</html>

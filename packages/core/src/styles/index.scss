@@ -1,0 +1,12 @@
+@import '_variables';
+
+.#{$prefix}__target {
+    position: relative;
+    text-decoration: none;
+    border-bottom: 1px dotted;
+    color: #000;
+
+    &:hover {
+     color: rgba(0, 0, 0, 0.6);
+    }
+}

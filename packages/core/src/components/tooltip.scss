@@ -1,0 +1,138 @@
+@import '../styles/variables';
+
+.#{$prefix}__tooltip {
+  visibility: hidden;
+  opacity: 0;
+  cursor: default;
+  position: absolute;
+  z-index: 1;
+  min-width: 120px;
+
+  &.show {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .#{$prefix}__content {
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #eaeaea;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+    text-align: center;
+    border-radius: 6px;
+    margin: 0;
+
+    .#{$prefix}__content__title {
+      border-radius: 6px 6px 0 0;
+      margin: 0;
+      background-color: #f7f7f7;
+      border-bottom: 1px solid #eaeaea;
+      text-align: left;
+      padding: 0.3rem 0.5rem;
+    }
+
+    .#{$prefix}__content__form {
+      padding: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+
+      .#{$prefix}__content__input {
+        white-space: pre-wrap;
+        padding: 0;
+        margin: 0;
+        position: relative;
+
+        input {
+          border: 1px solid #ccc;
+          border-radius: 6px;
+          padding: 0.5rem;
+          outline: none;
+          font-size: 0.875rem;
+          font-weight: 500;
+          line-height: 1.25rem;
+          color: #000;
+        }
+
+        .#{$prefix}__button__clear {
+          border: none;
+          background-color: transparent;
+          padding: 0.25rem;
+          margin: 0;
+          width: fit-content;
+          position: absolute;
+          right: 0rem;
+          top: 0rem;
+          cursor: pointer;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          svg {
+            width: 1.5rem;
+            height: 1.5rem;
+            background-color: #fff;
+            border-radius: 50%;
+          }
+
+          &:hover {
+            svg {
+              background-color: #ddd;
+            }
+          }
+        }
+      }
+
+      .#{$prefix}__content__buttons {
+        display: flex;
+        gap: 0.5rem;
+
+        .#{$prefix}__button__cancel,
+        .#{$prefix}__button__confirm,
+        .#{$prefix}__button__restore {
+          display: flex;
+          border: 1px solid;
+          padding: 0.37rem;
+          border-radius: 6px;
+          cursor: pointer;
+
+          svg {
+            width: 1.5rem;
+            height: 1.5rem;
+          }
+        }
+
+        .#{$prefix}__button__cancel {
+          background-color: #fff;
+          color: #000;
+          border-color: #ccc;
+
+          &:hover {
+            background-color: #ddd;
+          }
+        }
+
+        .#{$prefix}__button__confirm {
+          background-color: #000;
+          color: #fff;
+
+          &:hover {
+            background-color: #333;
+          }
+        }
+
+        .#{$prefix}__button__restore {
+          background-color: #fff;
+          color: #000;
+          border-color: #ccc;
+
+          &:hover {
+            background-color: #ddd;
+          }
+        }
+      }
+    }
+  }
+}

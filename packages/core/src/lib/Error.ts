@@ -11,3 +11,10 @@ export class InvalidTypeError extends Error {
         this.name = 'EditableJS - InvalidType';
     }
 }
+
+export class MissingPropertyError extends Error {
+    constructor(message: string) {
+        super(message);
+        this.name = 'EditableJS - MissingProperty';
+    }
+}

@@ -1,6 +1,8 @@
 import './styles/index.scss';
 import { Tooltip } from './components/tooltip';
 import { MicroEvent } from './lib/MicroEvent';
+import { defaultOptions } from './constants';
+import { MissingPropertyError } from './lib/Error';
 
 export class EditableJS extends MicroEvent {
   $el: HTMLElement;
@@ -18,18 +20,31 @@ export class EditableJS extends MicroEvent {
    * @param {HTMLAnchorElement} $el Element to make editable
    * @param {EditableJSOptions} options
    */
-  constructor($el: HTMLElement, options: EditableJSOptions ) {
+  constructor($el: HTMLElement, options?: Partial<EditableJSOptions>) {
     super();
 
     this._options = {
+      ...defaultOptions,
       ...this.parseEjsAttributes($el),
       ...options,
     };
+
     this.$el = $el;
     this._tooltip = new Tooltip(this.$el, this);
 
+    this._checkRequiredProperties();
     this._init();
     this._initHandler();
+  }
+
+  private _checkRequiredProperties() {
+    if (!this.$el) {
+      throw new MissingPropertyError('Element is required');
+    }
+
+    if (!this._options.type) {
+      throw new MissingPropertyError('Type is required');
+    }
   }
 
   private parseEjsAttributes<T extends Record<string, string>>(

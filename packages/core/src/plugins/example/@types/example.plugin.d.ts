@@ -1,3 +1,3 @@
-export type myType = {
+interface myType {
     prop1: string;
 };

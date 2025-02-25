@@ -3,7 +3,7 @@ enum EditableJSEvent {
   RESTORE = 'restore',
 }
 
-export type EditableJSAvailableTypes =
+type EditableJSAvailableTypes =
   | 'text'
   | 'email'
   | 'password'
@@ -14,9 +14,10 @@ export type EditableJSAvailableTypes =
   | 'select'
   | 'textarea';
 
-export type EditableJSOptions = {
+interface EditableJSOptions {
   type: EditableJSAvailableTypes;
-  placeholder?: string;
-  restore?: boolean;
-  forceValidation?: boolean;
+  placeholder: string | null;
+  restore: boolean | null;
+  forceValidation: boolean | null;
 };
+

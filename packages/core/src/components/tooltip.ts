@@ -1,9 +1,8 @@
-import { EditableJS } from '..';
+import { EditableJS } from '../EditableJS';
 import ClearIcon from '../icons/clear';
 import ConfirmIcon from '../icons/confirm';
 import RestoreIcon from '../icons/restore';
 import { DynamicInput } from '../lib/DynamicInput';
-import { EditableJSError, EditableJSInvalidType } from '../lib/Error';
 import './tooltip.scss';
 
 export class Tooltip {
@@ -74,6 +73,8 @@ export class Tooltip {
 
     this.$tooltipInput = this._getInput();
     this.$tooltipContentInput.appendChild(this.$tooltipInput);
+
+    this.$tooltipContentInput.appendChild(this._getClearButton());
 
     // Tooltip content buttons
     this.$tooltipContentButtons = document.createElement('div');

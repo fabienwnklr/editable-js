@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "dev": "nx serve",
+    "dev": "nx dev core",
     "build": "nx build",
     "format:write": "nx format write",
     "format:check": "nx format check",

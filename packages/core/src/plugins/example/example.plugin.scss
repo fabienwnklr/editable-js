@@ -1,0 +1,5 @@
+@use '@/_variables' as *;
+
+.#{$prefix}__example {
+    color: $color;
+}

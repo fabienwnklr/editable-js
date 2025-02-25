@@ -3,8 +3,10 @@ import { Tooltip } from './components/tooltip';
 import { MicroEvent } from './lib/MicroEvent';
 import { defaultOptions } from './constants';
 import { MissingPropertyError } from './lib/Error';
+import MicroPlugin from './lib/MicroPlugin';
+import type { EditableJSOptions } from './@types/editablejs.d';
 
-export class EditableJS extends MicroEvent {
+export class EditableJS extends MicroPlugin(MicroEvent) {
   $el: HTMLElement;
   _tooltip: Tooltip;
   _originalValue = '';
@@ -108,7 +110,7 @@ document.addEventListener('DOMContentLoaded', function () {
   $ejsElements.forEach(($el) => {
     if ($el instanceof HTMLElement) {
       const ejs = new EditableJS($el);
-      ejs.on('update', (ejs) => console.log('Updated ! ', ejs));
+      ejs.on('update', (ejs: EditableJS) => console.log('Updated ! ', ejs));
       console.log(ejs);
     } else {
       throw new Error(`Element ${$el} is not an HTMLElement`);

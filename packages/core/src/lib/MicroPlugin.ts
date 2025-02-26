@@ -90,7 +90,7 @@ export default function MicroPlugin(Interface: any) {
 
       // eslint-disable-next-line no-cond-assign
       while ((name = queue.shift())) {
-        self.require(name);
+        this.require(name);
       }
     }
 

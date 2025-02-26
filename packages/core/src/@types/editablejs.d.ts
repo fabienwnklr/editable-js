@@ -16,8 +16,8 @@ type EditableJSAvailableTypes =
 
 interface EditableJSOptions {
   type: EditableJSAvailableTypes;
-  placeholder: string | null;
-  restore: boolean | null;
-  forceValidation: boolean | null;
+  placeholder: string | undefined;
+  restore: boolean | undefined;
+  forceValidation: boolean | undefined;
 };
 

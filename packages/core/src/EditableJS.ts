@@ -4,7 +4,6 @@ import { MicroEvent } from './lib/MicroEvent';
 import { defaultOptions } from './constants';
 import { MissingPropertyError } from './lib/Error';
 import MicroPlugin from './lib/MicroPlugin';
-import type { EditableJSOptions } from './@types/editablejs.d';
 
 export class EditableJS extends MicroPlugin(MicroEvent) {
   $el: HTMLElement;

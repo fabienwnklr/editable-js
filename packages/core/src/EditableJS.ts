@@ -67,6 +67,7 @@ export class EditableJS extends MicroPlugin(MicroEvent) {
 
   private _init() {
     this.#id = this._generateUniqueId();
+    this._originalValue = this.$el.innerText;
     this.$el.setAttribute(`data-${this._prefix}-id`, this.#id);
   }
 
@@ -88,7 +89,7 @@ export class EditableJS extends MicroPlugin(MicroEvent) {
    * @param {boolean} forceValidation - If true, the original value will be set without validation.
    */
   restoreOriginalValue(forceValidation: boolean = false) {
-    if (this.getValue() === this._originalValue) return;
+    if (this.getInputValue() === this._originalValue) return;
 
     this._tooltip.$tooltipInput.value = this._originalValue;
     if (forceValidation) {
@@ -102,15 +103,21 @@ export class EditableJS extends MicroPlugin(MicroEvent) {
   getValue() {
     return this.$el.innerText;
   }
+
+  getInputValue() {
+    return this._tooltip.$tooltipInput.value;
+  }
 }
 
 document.addEventListener('DOMContentLoaded', function () {
   const $ejsElements = document.querySelectorAll(`[data-ejs="true"]`);
+  window.ejs = [];
   $ejsElements.forEach(($el) => {
     if ($el instanceof HTMLElement) {
       const ejs = new EditableJS($el);
+      window.ejs.push(ejs);
       ejs.on('update', (ejs: EditableJS) => console.log('Updated ! ', ejs));
-      console.log(ejs);
+      ejs.on('restore', (ejs: EditableJS) => console.log('Restored ! ', ejs));
     } else {
       throw new Error(`Element ${$el} is not an HTMLElement`);
     }

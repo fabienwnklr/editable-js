@@ -125,19 +125,6 @@ export class Tooltip {
     this.close();
   }
 
-  /*************  ✨ Codeium Command ⭐  *************/
-  /**
-   * Initializes event listeners for the tooltip:
-   * - Clicking outside the tooltip or its target will close it.
-   * - Pressing the escape key will close the tooltip.
-   * - Clicking the close button will close the tooltip.
-   * - Toggling the clear button based on the input value length.
-   * - Clearing the input value when the clear button is clicked.
-   * - Updating the content and closing the tooltip when enter is pressed.
-   * - Updating the content and closing the tooltip when the confirm button is clicked.
-   * - Restoring the original value when the restore button is clicked.
-   */
-  /******  910b97e4-07ab-4416-872a-572caf0fa6b2  *******/
   private _initHandler() {
     // close tooltip when click outside
     document.addEventListener('click', (e) => {

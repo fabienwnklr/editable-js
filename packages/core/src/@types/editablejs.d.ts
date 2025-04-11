@@ -19,5 +19,6 @@ interface EditableJSOptions {
   placeholder: string | undefined;
   restore: boolean | undefined;
   forceValidation: boolean | undefined;
+  editOnDoubleClick: boolean | undefined;
 };
 

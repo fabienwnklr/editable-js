@@ -13,7 +13,7 @@ export class EditableJS extends MicroPlugin(MicroEvent) {
   _prefix = 'ejs';
 
   // Private properties
-  #id = '';
+  id = '';
 
   /**
    * Creates a new instance of EditableJS.
@@ -31,10 +31,10 @@ export class EditableJS extends MicroPlugin(MicroEvent) {
     };
 
     this.$el = $el;
-    this._tooltip = new Tooltip(this.$el, this);
 
     this._checkRequiredProperties();
     this._init();
+    this._tooltip = new Tooltip(this.$el, this);
     this._initHandler();
   }
 
@@ -66,9 +66,9 @@ export class EditableJS extends MicroPlugin(MicroEvent) {
   }
 
   private _init() {
-    this.#id = this._generateUniqueId();
+    this.id = this._generateUniqueId();
     this._originalValue = this.$el.innerText;
-    this.$el.setAttribute(`data-${this._prefix}-id`, this.#id);
+    this.$el.setAttribute(`data-${this._prefix}-id`, this.id);
   }
 
   private _generateUniqueId() {
@@ -76,11 +76,7 @@ export class EditableJS extends MicroPlugin(MicroEvent) {
   }
 
   _initHandler() {
-    this.$el.addEventListener('click', (event) => {
-      event.preventDefault();
-      event.stopImmediatePropagation();
-      this._tooltip.open();
-    });
+    //
   }
 
   /**

@@ -16,7 +16,7 @@ export class Tooltip {
   $tooltip!: HTMLDivElement;
   $tooltipContent!: HTMLDivElement;
   $tooltipTitle: HTMLDivElement | null = null;
-  $tooltipContentForm!: HTMLDivElement;
+  $tooltipContentForm!: HTMLFormElement;
   $tooltipContentInput!: HTMLDivElement;
   $tooltipInput!: HTMLSelectElement | HTMLTextAreaElement | HTMLInputElement;
   $tooltipInputClearBtn: HTMLButtonElement | null = null;
@@ -58,18 +58,16 @@ export class Tooltip {
     }
 
     // Tooltip content form (input, buttons)
-    this.$tooltipContentForm = document.createElement('div');
-    this.$tooltipContentForm.classList.add(
-      `${this.ejs._prefix}__content__form`
-    );
+    this.$tooltipContentForm = document.createElement('form');
+    this.$tooltipContentForm.classList.add(`${this.ejs._prefix}__content__form`);
+    this.$tooltipContentForm.id = this.ejs.id + '-form';
     this.$tooltipContent.appendChild(this.$tooltipContentForm);
 
     // Tooltip input content
     this.$tooltipContentInput = document.createElement('div');
-    this.$tooltipContentInput.classList.add(
-      `${this.ejs._prefix}__content__input`
-    );
+    this.$tooltipContentInput.classList.add(`${this.ejs._prefix}__content__input`);
     this.$tooltipContentForm.appendChild(this.$tooltipContentInput);
+
 
     this.$tooltipInput = this._getInput();
     this.$tooltipContentInput.appendChild(this.$tooltipInput);
@@ -78,33 +76,25 @@ export class Tooltip {
 
     // Tooltip content buttons
     this.$tooltipContentButtons = document.createElement('div');
-    this.$tooltipContentButtons.classList.add(
-      `${this.ejs._prefix}__content__buttons`
-    );
+    this.$tooltipContentButtons.classList.add(`${this.ejs._prefix}__content__buttons`);
     this.$tooltipContentForm.appendChild(this.$tooltipContentButtons);
 
     // Tooltip buttons
     this.$tooltipButtonCancel = document.createElement('button');
-    this.$tooltipButtonCancel.classList.add(
-      `${this.ejs._prefix}__button__cancel`
-    );
+    this.$tooltipButtonCancel.classList.add(`${this.ejs._prefix}__button__cancel`);
     this.$tooltipButtonCancel.title = 'Cancel';
     this.$tooltipButtonCancel.innerHTML = ClearIcon();
     this.$tooltipContentButtons.appendChild(this.$tooltipButtonCancel);
 
     // Tooltip confirm button
     this.$tooltipButtonConfirm = document.createElement('button');
-    this.$tooltipButtonConfirm.classList.add(
-      `${this.ejs._prefix}__button__confirm`
-    );
+    this.$tooltipButtonConfirm.classList.add(`${this.ejs._prefix}__button__confirm`);
     this.$tooltipButtonConfirm.title = 'Confirm';
     this.$tooltipButtonConfirm.innerHTML = ConfirmIcon();
     this.$tooltipContentButtons.appendChild(this.$tooltipButtonConfirm);
 
     this.$tooltipButtonRestore = document.createElement('button');
-    this.$tooltipButtonRestore.classList.add(
-      `${this.ejs._prefix}__button__restore`
-    );
+    this.$tooltipButtonRestore.classList.add(`${this.ejs._prefix}__button__restore`);
     this.$tooltipButtonRestore.title = 'Restore';
     this.$tooltipButtonRestore.innerHTML = RestoreIcon();
     this.$tooltipContentButtons.appendChild(this.$tooltipButtonRestore);
@@ -117,6 +107,10 @@ export class Tooltip {
   }
 
   private _update() {
+    if (!this.$tooltipContentForm.checkValidity()) {
+      this.$tooltipContentForm.reportValidity();
+      return;
+    }
     const newValue = this.$tooltipInput.value.trim() ?? '';
     if (this.ejs.getValue() !== newValue) {
       this.$target.innerText = newValue;
@@ -126,6 +120,13 @@ export class Tooltip {
   }
 
   private _initHandler() {
+    const event = this.ejs._options.editOnDoubleClick ? 'dblclick' : 'click';
+    // open tooltip on click or double click (default is click)
+    this.$target.addEventListener(event, (event) => {
+      event.preventDefault();
+      this.open();
+    });
+
     // close tooltip when click outside
     document.addEventListener('click', (e) => {
       const $target = e.target as Node;
@@ -151,8 +152,7 @@ export class Tooltip {
     // Clear button toggle
     this.$tooltipInput.addEventListener('input', () => {
       if (this.$tooltipInputClearBtn) {
-        this.$tooltipInputClearBtn.style.display =
-          this.$tooltipInput.value.length > 0 ? '' : 'none';
+        this.$tooltipInputClearBtn.style.display = this.$tooltipInput.value.length > 0 ? '' : 'none';
       }
     });
 
@@ -178,8 +178,7 @@ export class Tooltip {
     this.$tooltipInputClearBtn?.addEventListener('click', (event) => {
       event.stopPropagation();
       this.$tooltipInput.value = '';
-      this.$tooltipInputClearBtn!.style.display =
-        this.$tooltipInput.value.length > 0 ? '' : 'none';
+      this.$tooltipInputClearBtn!.style.display = this.$tooltipInput.value.length > 0 ? '' : 'none';
       this.$tooltipInput.focus();
     });
   }
@@ -200,8 +199,7 @@ export class Tooltip {
 
     // Ensure the tooltip stays within the viewport (left-right)
     if (left < 0) left = 5;
-    if (left + tooltipRect.width > viewportWidth)
-      left = viewportWidth - tooltipRect.width - 5;
+    if (left + tooltipRect.width > viewportWidth) left = viewportWidth - tooltipRect.width - 5;
 
     this.$tooltip.style.top = `${top}px`;
     this.$tooltip.style.left = `${left}px`;
@@ -210,6 +208,7 @@ export class Tooltip {
   private _getInput() {
     const dynamicInput = new DynamicInput(this.ejs._options.type, {
       value: this.ejs.getValue(),
+      // required: this.ejs._options.required,
     });
 
     return dynamicInput.getElement();
@@ -217,9 +216,7 @@ export class Tooltip {
 
   private _getClearButton(): HTMLButtonElement {
     this.$tooltipInputClearBtn = document.createElement('button');
-    this.$tooltipInputClearBtn.classList.add(
-      `${this.ejs._prefix}__button__clear`
-    );
+    this.$tooltipInputClearBtn.classList.add(`${this.ejs._prefix}__button__clear`);
     this.$tooltipInputClearBtn.innerHTML = ClearIcon();
     return this.$tooltipInputClearBtn;
   }
@@ -243,13 +240,14 @@ export class Tooltip {
 
     if ($el instanceof HTMLInputElement || $el instanceof HTMLTextAreaElement) {
       $el.focus();
-      $el.setSelectionRange($el.value.length, $el.value.length);
-    }
-    else if ($el instanceof HTMLSelectElement) {
+
+      if ($el.type !== 'email' && $el.type !== 'password') {
+        $el.setSelectionRange($el.value.length, $el.value.length);
+      }
+    } else if ($el instanceof HTMLSelectElement) {
       $el.focus();
     }
   }
-
 
   close() {
     if (!this.isOpen || !this.$tooltip) {

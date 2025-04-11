@@ -53,6 +53,12 @@
           font-weight: 500;
           line-height: 1.25rem;
           color: #000;
+
+          // invalid input
+          &:invalid {
+            border-color: #ff0000;
+            background-color: #fff0f0;
+          }
         }
 
         .#{$prefix}__button__clear {
